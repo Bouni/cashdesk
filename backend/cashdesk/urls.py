@@ -7,7 +7,8 @@ from django.views.generic import TemplateView
 from rest_framework import routers
 from accounts.views import AccountViewSet, TransactionViewSet
 from items.views import ItemViewSet
-from items.fetch_images import fetch
+from items.fetch_images import fetch as fetch_item_images
+from accounts.fetch_images import fetch as fetch_account_images
 
 index_view = never_cache(TemplateView.as_view(template_name="index.html"))
 
@@ -22,4 +23,5 @@ urlpatterns = [
     re_path(r'', index_view, name="index")
 ]
 
-fetch()
+fetch_item_images()
+fetch_account_images()
