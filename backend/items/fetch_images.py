@@ -28,7 +28,7 @@ def fetch():
             r = download(i.image, fname)
             if r:
                 print(f"Downloaded item image {i.image} to /media/items/{fname}")
-                i.image = f"/media/tems/{fname}"
+                i.image = f"/media/items/{fname}"
                 i.save()
             else:
                 print(f"Error: item image {i.image} couldn't be downloaded!")
