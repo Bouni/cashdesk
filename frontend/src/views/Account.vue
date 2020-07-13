@@ -20,7 +20,7 @@
               <v-row>
                 <v-col cols="12" sm="12" md="12" class="d-flex justify-center">
                   <v-avatar color="grey" size="128" >
-                    <img :src="`/static/img/${account.owner}.svg`">    
+                    <img :src="`/media/owners/${account.owner}.svg`">    
                   </v-avatar>
                 </v-col>
                 <v-col cols="12" sm="12" md="12" :class="[ balanceColor(account.balance), 'd-flex justify-center']">
@@ -195,31 +195,31 @@ export default {
     euros: [
       {
         value: 0.5,
-        image: "/static/img/euro-0.5.png"
+        image: "/media/euros/euro-0.5.png"
       },
       {
         value: 1.0,
-        image: "/static/img/euro-1.png"
+        image: "/media/euros/euro-1.png"
       },
       {
         value: 2.0,
-        image: "/static/img/euro-2.png"
+        image: "/media/euros/euro-2.png"
       },
       {
         value: 5.0,
-        image: "/static/img/euro-5.png"
+        image: "/media/euros/euro-5.png"
       },
       {
         value: 10.0,
-        image: "/static/img/euro-10.png"
+        image: "/media/euros/euro-10.png"
       },
       {
         value: 20.0,
-        image: "/static/img/euro-20.png"
+        image: "/media/euros/euro-20.png"
       },
       {
         value: 50.0,
-        image: "/static/img/euro-50.png"
+        image: "/media/euros/euro-50.png"
       },
     ]
   }),

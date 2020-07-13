@@ -20,9 +20,13 @@ def download(u, n):
 
 
 def fetch():
-    accounts = Account.objects.all()
-    for a in accounts:
-        fname = f"{a.owner}.svg"
-        if not os.path.isfile(os.path.join(BASE_DIR, "static", "img", fname)):
-            url = f"https://avatars.dicebear.com/api/bottts/{a.owner}.svg"
-            r = download(url, fname)
+    try:
+        accounts = Account.objects.all()
+        for a in accounts:
+            fname = f"{a.owner}.svg"
+            if not os.path.isfile(os.path.join(BASE_DIR, "static", "img", fname)):
+                url = f"https://avatars.dicebear.com/api/bottts/{a.owner}.svg"
+                r = download(url, fname)
+    except:
+        pass
+

@@ -20,14 +20,17 @@ def download(u, n):
 
 
 def fetch():
-    items = Item.objects.filter(image__istartswith='http')
-    for i in items:
-        ext = i.image.rsplit(".",1)[1]
-        fname = f"{i.brand}-{i.name}.{ext}".replace(" ", "-")
-        r = download(i.image, fname)
-        if r:
-            print(f"Downloaded item image {i.image} to /static/img/{fname}")
-            i.image = f"/static/img/{fname}"
-            i.save()
-        else:
-            print(f"Error: item image {i.image} couldn't be downloaded!")
+    try:
+        items = Item.objects.filter(image__istartswith='http')
+        for i in items:
+            ext = i.image.rsplit(".",1)[1]
+            fname = f"{i.brand}-{i.name}.{ext}".replace(" ", "-")
+            r = download(i.image, fname)
+            if r:
+                print(f"Downloaded item image {i.image} to /static/img/{fname}")
+                i.image = f"/static/img/{fname}"
+                i.save()
+            else:
+                print(f"Error: item image {i.image} couldn't be downloaded!")
+    except:
+        pass

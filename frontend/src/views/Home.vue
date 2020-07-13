@@ -11,7 +11,7 @@
               <v-row>
                 <v-col cols="12" sm="12" class="d-flex justify-center">
                   <v-avatar color="grey" size="128" >
-                    <img :src="`/static/img/${account.owner}.svg`">    
+                    <img :src="`/media/owners/${account.owner}.svg`">    
                   </v-avatar>
                 </v-col>
                 <v-col cols="12" sm="12" :class="[balanceColor(account.balance), 'd-flex justify-center balance']" >
