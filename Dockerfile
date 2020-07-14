@@ -25,7 +25,7 @@ RUN cd /frontend && yarn && yarn run build
 
 # ==============================================================================
 # setup backend and install its dependencies
-RUN mkdir /{app,data}
+RUN mkdir /{app,data} && mkdir -p /app/templates
 WORKDIR /app
 
 COPY backend/requirements.txt /app
