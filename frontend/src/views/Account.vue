@@ -12,6 +12,7 @@
     
       <v-row>
         <v-col cols="12" sm="12" md="6">
+          
           <v-card>    
             <v-card-title class="justify-center">
             {{ account.owner }}
@@ -29,58 +30,62 @@
               </v-row>
             </v-card-text>
           </v-card>
+
           <v-card class="mt-3">
             <div class="text-center">
               <div class="py-5">
                 <v-btn x-large color="amber" @click="vendDialog = true" dark class="mt-3">
                 <v-icon large class="mr-4">mdi-bottle-soda-classic-outline</v-icon> Getränk kaufen</v-btn>
 
-                <v-dialog v-model="vendDialog" width="auto ">
+                <v-dialog v-model="vendDialog" width="90%">
                   <v-card>
                   <v-card-title>
                     <span class="headline">Getränk kaufen</span>
                   </v-card-title>
                   <v-card-text>
+
                     <v-container>
                     <v-row dense>
                       <v-col cols="12" sm="12" md="4" v-for="item in items" :key="item.id">
-			            <v-row dense>
-			              <v-col cols="12">
-			            	<v-card dark @click="vendItem(item)" v-if="item.stock">
-			            	  <div class="d-flex flex-no-wrap justify-space-between">
-			            		<div>
-			            		  <v-card-title class="headline">{{ item.brand }}</v-card-title>
-			            		  <v-card-subtitle>
-                                  <div class="balance">{{ item.name }} <span class="ml-4 text-h6">{{ item.size }}</span></div>
-                                  <div class="balance mt-3">{{ item.price | euro }}</div>
-                                  </v-card-subtitle>
-			            		</div>
-			            		<v-avatar class="ma-3" size="7em" tile>
-			            		  <v-img contain max-height="7em" :src="item.image"></v-img>
-			            		</v-avatar>
-			            	  </div>
-			            	</v-card>
-			            	<v-card class="grey lighten-3" v-else>
-			            	  <div class="d-flex flex-no-wrap justify-space-between">
-			            		<div>
-			            		  <v-card-title class="headline grey--text">{{ item.brand }}</v-card-title>
-			            		  <v-card-subtitle>
-                                  <div class="balance grey--text">{{ item.name }} <span class="ml-4 text-h6">{{ item.size }}</span></div>
-                                  <div class="balance mt-3 grey--text">{{ item.price | euro }}</div>
-                                  </v-card-subtitle>
-			            		</div>
-			            		<v-avatar class="ma-3" size="7em" tile>
-			            		  <v-img contain max-height="7em" :src="item.image" style="filter: grayscale(100%);"></v-img>
-			            		</v-avatar>
-			            	  </div>
-			            	</v-card>
-			              </v-col>
-			            </v-row>
-				  	</v-col>
+                        <v-card dark @click="vendItem(item)" v-if="item.stock">
+                        <v-row dense>
+                          <v-col cols="12" sm="12" md="9">
+                            <v-card-title>
+                            {{ item.brand }}
+                            </v-card-title>
+                            <v-card-subtitle>
+                              {{ item.name }}<br/>
+                              {{ item.size }}<span class="ml-3">{{ item.price | euro }}</span>
+                            </v-card-subtitle>
+                          </v-col>
+                          <v-col cols="12" sm="12" md="3" class="my-auto">
+                              <v-img :src="item.image" max-height="7em" contain></v-img>
+                          </v-col>
+                        </v-row>
+                        </v-card>
+                        <v-card class="grey darken-2" v-else>
+                        <v-row dense>
+                          <v-col cols="12" sm="12" md="9">
+                            <v-card-title class="grey--text">
+                            {{ item.brand }}
+                            </v-card-title>
+                            <v-card-subtitle class="grey--text">
+                              {{ item.name }}<br/>
+                              {{ item.size }}<span class="ml-3">{{ item.price | euro }}</span>
+                            </v-card-subtitle>
+                          </v-col>
+                          <v-col cols="12" sm="12" md="3" class="my-auto">
+                              <v-img :src="item.image" max-height="7em" contain style="filter: grayscale(100%);"></v-img>
+                          </v-col>
+                        </v-row>
+                        </v-card>
+                      </v-col>
 				    </v-row>	
 				    </v-container>
+
 				  </v-card-text>
-				  </v-card> 
+                  </v-card> 
+
                 </v-dialog>
 
               </div>
@@ -88,7 +93,7 @@
                 <v-btn x-large color="success" @click="depositDialog = true" dark class="mb-3">
                 <v-icon large class="mr-4">mdi-cash-plus</v-icon> Konto aufladen</v-btn>
                 
-                <v-dialog v-model="depositDialog"  width="auto ">
+                <v-dialog v-model="depositDialog" width="90%">
                   <v-card>
                   <v-card-title>
                     <span class="headline">Konto aufladen</span>

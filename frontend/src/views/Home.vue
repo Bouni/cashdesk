@@ -2,7 +2,7 @@
   <div class="home">
     <v-container>
       <v-row>
-        <v-col v-for="account in accounts" :key="account.id" cols="12" sm="12" md="3">
+        <v-col v-for="account in accounts" :key="account.id" cols="12" sm="12" md="4">
           <v-card :to="{ name: 'Account', params: { owner: account.owner } }">    
             <v-card-title class="justify-center">
               {{ account.owner }}
@@ -28,7 +28,7 @@
 
 <style scoped>
 .balance {
-    font-size: 180%;
+    font-size: 160%;
 }
 </style>
 

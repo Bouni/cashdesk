@@ -7,28 +7,22 @@
          </v-card-title>
          <v-card-text>
          <v-row v-for="item in items" :key="item.id" align="center" justify="center">
-            <v-col xs="12" lg="2">
-			  <v-avatar class="ma-3" size="5em" tile v-if="item.stock">
-			    <v-img contain max-height="5em" :src="item.image"></v-img>
-			  </v-avatar>
-			  <v-avatar class="ma-3" size="5em" tile v-else>
-			    <v-img contain max-height="5em" :src="item.image" style="filter: grayscale(100%);"></v-img>
-			  </v-avatar>
+            <v-col cols="12" xs="12" sm="12" md="2">
+			    <v-img contain max-height="5em" :src="item.image" v-if="item.stock"></v-img>
+			    <v-img contain max-height="5em" :src="item.image" v-else style="filter: grayscale(100%);"></v-img>
             </v-col>
-            <v-col xs="6" lg="6" :class="[item.stock ? '' : 'grey--text', 'headline']">
+            <v-col cols="12" xs="12" sm="12" md="6" :class="[item.stock ? '' : 'grey--text', 'headline']">
               {{ item.brand }} {{item.name }}
             </v-col>
-            <v-col xs="3" lg="1" :class="[item.stock ? '' : 'grey--text', 'headline']">
+            <v-col cols="12" xs="12" sm="6" md="2" :class="[item.stock ? '' : 'grey--text', 'headline']">
               {{ item.price | euro }}
             </v-col>
-            <v-col xs="3" lg="1" class="headline">
+            <v-col cols="12" xs="12" sm="6" md="2" class="text-center headline">
               <v-btn v-if="item.stock" @click="toggleStock(item)">
-                <v-icon>mdi-do-not-disturb</v-icon>
-                Nicht verfügbar
+                <v-icon color="red darken-4">mdi-do-not-disturb</v-icon>
               </v-btn>
               <v-btn v-else @click="toggleStock(item)">
-                <v-icon>mdi-check</v-icon>
-                Verfügbar
+                <v-icon color="green darken-4">mdi-plus-circle</v-icon>
               </v-btn>
             </v-col>
          </v-row>
