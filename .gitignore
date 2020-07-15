@@ -288,3 +288,4 @@ yarn-error.log*
 ### Misc
 
 .direnv
+secrets.py
