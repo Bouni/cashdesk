@@ -14,16 +14,11 @@
             <v-col cols="12" xs="12" sm="12" md="6" :class="[item.stock ? '' : 'grey--text', 'headline']">
               {{ item.brand }} {{item.name }}
             </v-col>
-            <v-col cols="12" xs="12" sm="6" md="2" :class="[item.stock ? '' : 'grey--text', 'headline']">
+            <v-col cols="12" xs="6" sm="6" md="2" :class="[item.stock ? '' : 'grey--text', 'headline']">
               {{ item.price | euro }}
             </v-col>
-            <v-col cols="12" xs="12" sm="6" md="2" class="text-center headline">
-              <v-btn v-if="item.stock" @click="toggleStock(item)">
-                <v-icon color="red darken-4">mdi-do-not-disturb</v-icon>
-              </v-btn>
-              <v-btn v-else @click="toggleStock(item)">
-                <v-icon color="green darken-4">mdi-plus-circle</v-icon>
-              </v-btn>
+            <v-col cols="12" xs="6" sm="6" md="2" class="text-center headline">
+              <v-switch :input-value="item.stock" @change="toggleStock(item)" color="info" :label="item.stock ? 'verfügbar' : 'nicht verfügbar'">
             </v-col>
          </v-row>
          </v-card-text>
