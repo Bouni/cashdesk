@@ -17,7 +17,7 @@ class Item(models.Model):
     )
 
     class Meta:
-        ordering = ['-stock']
+        #ordering = ['-stock']
         constraints = [models.UniqueConstraint(fields=['brand', 'name'], name='unique item')]
 
     def __str__(self):
