@@ -7,6 +7,7 @@ services:
   cashdesk-backend:
     container_name: cashdesk-backend
     build: backend
+    image: cashdesk-backend
     volumes:
       - static-files:/app/static
       - ./data/db.sqlite3:/app/db.sqlite3
@@ -16,6 +17,7 @@ services:
   cashdesk-frontend:
     container_name: cashdesk-frontend
     build: frontend
+    image: cashdesk-frontend
     ports:
       - "8000:80"
     volumes:
