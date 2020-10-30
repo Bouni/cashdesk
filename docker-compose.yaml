@@ -1,12 +1,26 @@
 version: '3.8'
+
+volumes:
+  static-files:
+
 services:
-  cashdesk:
-    container_name: cashdesk
-    build: .
-    ports:
-      - "8000:80"
+  cashdesk-backend:
+    container_name: cashdesk-backend
+    build: backend
     volumes:
-      - .:/data
+      - static-files:/app/static
+      - ./data/db.sqlite3:/app/db.sqlite3
       - ./media:/app/media
     restart: always
 
+  cashdesk-frontend:
+    container_name: cashdesk-frontend
+    build: frontend
+    ports:
+      - "8000:80"
+    volumes:
+      - static-files:/app/static
+      - ./media:/app/media
+    restart: always
+    depends_on: 
+      - cashdesk-backend

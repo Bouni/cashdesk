@@ -64,10 +64,10 @@
                         </v-row>
                         </v-card>
                       </v-col>
-				    </v-row>	
-				    </v-container>
+                    </v-row>    
+                    </v-container>
 
-				  </v-card-text>
+                  </v-card-text>
                   </v-card> 
 
                 </v-dialog>
@@ -87,26 +87,26 @@
                     <v-row dense>
                       <v-col cols="12" sm="12" md="4" v-for="item in euros" :key="item.value">
                       <v-container>
-			            <v-row dense>
-			              <v-col cols="12">
-			            	<v-card dark @click="depositCash(item.value)">
-			            	  <div class="d-flex flex-no-wrap justify-space-between">
-			            		<div>
-			            		  <v-card-title class="headline">{{ item.value }}€</v-card-title>
-			            		</div>
-			            		<v-avatar class="ma-3" size="7em" tile>
-			            		  <v-img contain max-height="7em" :src="item.image"></v-img>
-			            		</v-avatar>
-			            	  </div>
-			            	</v-card>
-			              </v-col>
-			            </v-row>
-			          </v-container>
-				  	</v-col>
-				    </v-row>	
-				    </v-container>
-				  </v-card-text>
-				  </v-card> 
+                        <v-row dense>
+                          <v-col cols="12">
+                            <v-card dark @click="depositCash(item.value)">
+                              <div class="d-flex flex-no-wrap justify-space-between">
+                                <div>
+                                  <v-card-title class="headline">{{ item.value }}€</v-card-title>
+                                </div>
+                                <v-avatar class="ma-3" size="7em" tile>
+                                  <v-img contain max-height="7em" :src="item.image"></v-img>
+                                </v-avatar>
+                              </div>
+                            </v-card>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                      </v-col>
+                    </v-row>    
+                    </v-container>
+                  </v-card-text>
+                  </v-card> 
                 </v-dialog>
 
               </div>
@@ -140,15 +140,15 @@
             <v-card-title>
               <span class="headline">Transaktion streichen?</span>
             </v-card-title>
-			<v-card-actions>
-			  <v-spacer></v-spacer>
-			  <v-btn color="red darken-1" @click="revokeDialog = false;revokeTarget = null;">
-				Abbrechen
-			  </v-btn>
-			  <v-btn color="green darken-1"	@click="revokeTransaction">
-				Streichen
-			  </v-btn>
-			</v-card-actions>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="red darken-1" @click="revokeDialog = false;revokeTarget = null;">
+                Abbrechen
+              </v-btn>
+              <v-btn color="green darken-1"    @click="revokeTransaction">
+                Streichen
+              </v-btn>
+            </v-card-actions>
             </v-card>
           </v-dialog>
         </v-col>
@@ -180,7 +180,7 @@ export default {
     depositDialog: false,
     revokeDialog: false,
     revokeTarget: null,
-	items: [],
+    items: [],
     euros: [
       {
         value: 0.5,
@@ -301,7 +301,7 @@ export default {
         .then(data => {
           this.items = data;
         });
-	},
+    },
     balanceColor(v) {
       if(v > 0) {
         return "green--text" ;
@@ -315,7 +315,7 @@ export default {
       return v ? 'text-decoration-line-through' : '';
     }
   },
-  mounted() {	
+  mounted() {    
     this.loadAccount(this.$route.params.owner);
     this.loadItems();
   }
