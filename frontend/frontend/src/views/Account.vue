@@ -40,7 +40,12 @@
                 <v-dialog v-model="vendDialog" width="90%">
                   <v-card>
                   <v-card-title>
+                    <v-spacer></v-spacer>
                     <span class="headline">Getränk kaufen</span>
+                    <v-spacer></v-spacer>
+                    <v-btn icon color="secondary" fab small @click="vendDialog = false">
+                      <v-icon dark>mdi-close</v-icon>
+                    </v-btn>
                   </v-card-title>
                   <v-card-text>
 
@@ -80,7 +85,12 @@
                 <v-dialog v-model="depositDialog" width="90%">
                   <v-card>
                   <v-card-title>
+                    <v-spacer></v-spacer>
                     <span class="headline">Konto aufladen</span>
+                    <v-spacer></v-spacer>
+                    <v-btn icon color="secondary" fab small @click="depositDialog = false">
+                      <v-icon dark>mdi-close</v-icon>
+                    </v-btn>
                   </v-card-title>
                   <v-card-text>
                     <v-container>
@@ -222,7 +232,6 @@ export default {
         return new Date(d).toLocaleDateString('de-DE', options)
     }
   },
-
   methods: {
     vendItem(i) {
       var d = {
