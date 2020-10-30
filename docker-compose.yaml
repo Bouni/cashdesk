@@ -8,6 +8,8 @@ services:
     container_name: cashdesk-backend
     build: backend
     image: cashdesk-backend
+    ports:
+      - "8010:8000"
     volumes:
       - static-files:/app/static
       - ./data/db.sqlite3:/app/db.sqlite3

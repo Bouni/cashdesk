@@ -1,8 +1,14 @@
 module.exports = {
-  outputDir: "dist",
-  //publicPath: "/static/",  
-  devServer: {
-    writeToDisk: true
-  },
-  transpileDependencies: ["vuetify"]
+    outputDir: "dist",
+    devServer: {
+        writeToDisk: true,
+        proxy: {
+            '/api': {
+                target: 'http://localhost:8010',
+                ws: true,
+                changeOrigin: true
+            },
+        }
+    },
+    transpileDependencies: ["vuetify"]
 };
