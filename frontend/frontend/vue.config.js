@@ -1,6 +1,6 @@
 module.exports = {
   outputDir: "dist",
-  publicPath: "/static/",  
+  //publicPath: "/static/",  
   devServer: {
     writeToDisk: true
   },
