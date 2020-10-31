@@ -3,7 +3,12 @@
     <v-container>
       <v-card>
          <v-card-title class="justify-center">
+            <v-spacer></v-spacer>
            Getränke
+            <v-spacer></v-spacer>
+            <v-btn icon color="secondary" fab small :to="{ name: 'Home'}">
+              <v-icon dark>mdi-close</v-icon>
+            </v-btn>
          </v-card-title>
          <v-card-text>
          <v-row v-for="item in items" :key="item.id" align="center" justify="center">
