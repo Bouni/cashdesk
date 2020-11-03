@@ -3,6 +3,7 @@
     <v-container>
       <v-card>
          <v-card-title class="justify-center">
+            <v-btn @click="addItem()"><v-icon>mdi-plus</v-icon> New</v-btn>
             <v-spacer></v-spacer>
             <v-btn icon color="secondary" fab small :to="{ name: 'Home'}">
               <v-icon dark>mdi-close</v-icon>
@@ -32,10 +33,10 @@
          </v-row>
          </v-card-text>
       </v-card> 
-      <v-dialog v-model="editDialog" max-width="600px">
+      <v-dialog v-model="dialog" max-width="600px">
         <v-card>
         <v-card-title>
-          <span class="headline">Produkt ändern</span>
+          <span class="headline">{{ dialogTitle }}</span>
         </v-card-title>
         <v-card-text>
           <v-form ref="form" v-if="item">
@@ -43,13 +44,13 @@
             <v-text-field v-model="item.name" label="Produktname" @blur="$v.item.name.$touch()" :error-messages="nameErrors"></v-text-field>
             <v-text-field v-model="item.size" label="Grösse"></v-text-field>
             <v-text-field v-model="item.price" label="Preis" @blur="$v.item.price.$touch()" :error-messages="priceErrors"></v-text-field>
-            <v-text-field v-model="item.image" label="Bild" @blur="$v.item.image.$touch()" :error-messages="imageErrors"></v-text-field>
+            <v-text-field v-model="item.image" label="Bild (URL)" @blur="$v.item.image.$touch()" :error-messages="imageErrors"></v-text-field>
           </v-form>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="editDialog = false">Close</v-btn>
-          <v-btn color="green darken-1" text @click="saveItem(item.id)">Save</v-btn>
+          <v-btn color="blue darken-1" text @click="dialog = false">Abbrechen</v-btn>
+          <v-btn color="green darken-1" text @click="saveItem(item.id)">Speichern</v-btn>
         </v-card-actions>
         </v-card>
       </v-dialog>
@@ -60,12 +61,21 @@
 
 <script>
 
-import { required, decimal } from 'vuelidate/lib/validators'
+import { required, decimal, url, or } from 'vuelidate/lib/validators'
+
+const localPath = function(p) {
+  // Shit solution for check for local path 
+  if(p.startsWith("/media/items/")) {
+    return true;
+  }
+  return false;
+}
 
 export default {
   name: "Settings",
   data: () => ({
-    editDialog: false,
+    dialog: false,
+    dialogTitle: null,
     item: null,
     items: [],
 
@@ -85,6 +95,10 @@ export default {
         },
         image: {
           required,
+          urlOrPath: or(
+            url, 
+            localPath
+          )
         }
     }
   },
@@ -113,6 +127,7 @@ export default {
       const errors = []
       if (!this.$v.item.image.$dirty) return errors
       !this.$v.item.image.required && errors.push('Bild ist ein Pflichtfeld!')
+      !this.$v.item.image.urlOrPath && errors.push('Bild muss eine URL sein!')
       return errors
     }
   },
@@ -123,29 +138,52 @@ export default {
 
   methods: {
     editItem(id) {
+      this.dialogTitle = "Ändern";
       this.item = Object.assign({},this.items.find(item => item.id == id));
-      this.editDialog = true;
+      this.dialog = true;
+    },
+    addItem() {
+      this.dialogTitle = "Neu";
+      this.item = {};
+      this.dialog = true;
     },
 	saveItem(id) {
       // trigger validation
       this.$v.$touch()
+      console.log(this.item)
       // do not sumbit if invalid
       if(this.$v.$invalid) {
         return
       }
-	  this.items[this.items.findIndex(item => item.id == id)] = this.item;
-      fetch("api/items/" + id + "/", {
-        body: JSON.stringify(this.item),
-        method: "PATCH",
-        headers: {
-          "X-CSRFToken": this.$cookies.get('csrftoken'),
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-        },
-      })
-      .then(() => {
-	    this.editDialog = false;
-	  })
+      if(this.dialogTitle == "Ändern") {
+          this.items[this.items.findIndex(item => item.id == id)] = this.item;
+          fetch("api/items/" + id + "/", {
+            body: JSON.stringify(this.item),
+            method: "PATCH",
+            headers: {
+              "X-CSRFToken": this.$cookies.get('csrftoken'),
+              "Accept": "application/json",
+              "Content-Type": "application/json",
+            },
+          })
+          .then(() => {
+            this.dialog = false;
+          })
+      } else {
+          fetch("api/items/", {
+            body: JSON.stringify(this.item),
+            method: "POST",
+            headers: {
+              "X-CSRFToken": this.$cookies.get('csrftoken'),
+              "Accept": "application/json",
+              "Content-Type": "application/json",
+            },
+          })
+          .then(() => {
+            this.loadItems();
+            this.dialog = false;
+          }) 
+      }
 	},
     toggleStock(id, stock) {
       fetch("api/items/" + id + "/", {
