@@ -51,7 +51,7 @@
 
                     <v-container>
                     <v-row dense>
-                      <v-col cols="12" sm="12" md="4" v-for="item in items" :key="item.id">
+                      <v-col cols="12" sm="12" md="4" v-for="item in itemsInStock" :key="item.id">
                         <v-card dark @click="vendItem(item)" v-if="item.stock">
                         <v-row dense>
                           <v-col cols="12" sm="12" md="9">
@@ -230,6 +230,11 @@ export default {
     date(d) {
         const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
         return new Date(d).toLocaleDateString('de-DE', options)
+    }
+  },
+  computed: {
+    itemsInStock() {
+      return this.items.filter(item => item.stock)
     }
   },
   methods: {
