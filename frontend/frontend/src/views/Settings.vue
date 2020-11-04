@@ -25,7 +25,10 @@
               <v-switch :input-value="item.stock" @change="toggleStock(item.id, item.stock)" color="info" :label="item.stock ? 'verfügbar' : 'nicht verfügbar'"></v-switch>
             </v-col>
             <v-col>
-              <v-btn @click="editItem(item.id)"><v-icon>mdi-pencil</v-icon> Edit</v-btn>
+             <v-row>
+              <v-btn @click="editItem(item.id)" small fab class="mx-2 my-2" elevation="1"><v-icon>mdi-pencil</v-icon></v-btn>
+              <v-btn @click="deleteItem(item.id)" small fab class="mx-2 my-2" elevation="1" color="red darken-4" dark><v-icon>mdi-trash-can</v-icon></v-btn>
+              </v-row>
             </v-col>
             <v-col cols="12">
             <v-divider></v-divider>
@@ -33,6 +36,7 @@
          </v-row>
          </v-card-text>
       </v-card> 
+
       <v-dialog v-model="dialog" max-width="600px">
         <v-card>
         <v-card-title>
@@ -51,6 +55,19 @@
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="dialog = false">Abbrechen</v-btn>
           <v-btn color="green darken-1" text @click="saveItem(item.id)">Speichern</v-btn>
+        </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog v-model="deleteDialog" max-width="600px">
+        <v-card>
+        <v-card-title>
+          <span class="headline">Löschen?</span>
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="deleteDialog = false">Abbrechen</v-btn>
+          <v-btn color="red darken-1" text @click="deleteItem(item.id)">Löschen</v-btn>
         </v-card-actions>
         </v-card>
       </v-dialog>
@@ -76,6 +93,7 @@ export default {
   data: () => ({
     dialog: false,
     dialogTitle: null,
+    deleteDialog: false,
     item: null,
     items: [],
 
@@ -137,6 +155,25 @@ export default {
   },
 
   methods: {
+	deleteItem(id) {
+      if(!this.deleteDialog) {
+        this.item = Object.assign({},this.items.find(item => item.id == id));
+        this.deleteDialog = true;
+      } else {
+        this.items.splice(this.items.findIndex(item => item.id == id), 1);
+        fetch("api/items/" + id + "/", {
+          method: "DELETE",
+          headers: {
+            "X-CSRFToken": this.$cookies.get('csrftoken'),
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
+        })
+        .then(() => {
+          this.deleteDialog = false;
+        })
+      }
+	},
     editItem(id) {
       this.dialogTitle = "Ändern";
       this.item = Object.assign({},this.items.find(item => item.id == id));
